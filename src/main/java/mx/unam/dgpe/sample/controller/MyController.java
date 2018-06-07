@@ -24,11 +24,11 @@ public class MyController extends AbstractVerticle {
         //router.route("/*").handler(StaticHandler.create("assets")); // para invocar asi: http://localhost:8080/index.html
         // el directorio "upload-folder" será creado en la misma ubicación que el jar fue ejecutado
         router.route().handler(BodyHandler.create().setUploadsDirectory("upload-folder"));
-        router.get("/api/primero").handler(this::primero);
         router.get("/api/sumar").handler(this::sumar);
         router.get("/api/restar").handler(this::restar);
         router.get("/api/multiplica").handler(this::multiplica);
         router.get("/api/divide").handler(this::divide);
+
                 
         // Create the HTTP server and pass the "accept" method to the request handler.
         vertx.createHttpServer().requestHandler(router::accept).listen(
@@ -42,15 +42,7 @@ public class MyController extends AbstractVerticle {
         pba = System.getenv("PBA");
         logger.info("Vertical iniciada !!!");
     }  
-    private void primero(RoutingContext routingContext) {
-        HttpServerResponse response = routingContext.response();
-        HttpServerRequest request = routingContext.request();
-        String mode = request.getParam("mode");
-        String jsonResponse = procesa(mode);
-        response.setStatusCode(200).
-        putHeader("content-type", "application/json; charset=utf-8").
-        end(jsonResponse);
-    }
+
     
     private void sumar(RoutingContext routingContext) {
         HttpServerResponse response = routingContext.response();
